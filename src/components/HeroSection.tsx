@@ -1,6 +1,6 @@
+import { Suspense } from "react";
 import { motion } from "framer-motion";
-import AsciiOverlay from "./AsciiOverlay";
-import TopographicLines from "./TopographicLines";
+import ParticleGlobe from "./ParticleGlobe";
 
 interface HeroSectionProps {
   scrollProgress: number;
@@ -9,8 +9,18 @@ interface HeroSectionProps {
 const HeroSection = ({ scrollProgress }: HeroSectionProps) => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      <TopographicLines scrollProgress={scrollProgress} />
-      <AsciiOverlay />
+      {/* Globe background */}
+      <div className="absolute inset-0 z-0">
+        <Suspense
+          fallback={
+            <div className="h-full flex items-center justify-center text-muted-foreground font-mono text-sm">
+              Loading globe...
+            </div>
+          }
+        >
+          <ParticleGlobe />
+        </Suspense>
+      </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         <motion.p
@@ -26,7 +36,7 @@ const HeroSection = ({ scrollProgress }: HeroSectionProps) => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="text-5xl md:text-7xl font-heading font-bold leading-tight mb-6 text-glow"
+          className="text-5xl md:text-7xl font-heading font-bold leading-tight mb-6"
         >
           Spatial Forecasting
           <br />
@@ -37,7 +47,7 @@ const HeroSection = ({ scrollProgress }: HeroSectionProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 font-mono text-sm leading-relaxed"
+          className="text-muted-foreground max-w-2xl mx-auto mb-10 font-mono text-sm leading-relaxed"
         >
           Senior EO Data Scientist specializing in parallel processing pipelines,
           multidimensional datacube analytics, and geospatial intelligence

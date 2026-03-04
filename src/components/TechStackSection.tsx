@@ -28,7 +28,7 @@ const TechStackSection = () => {
             Infrastructure
           </p>
           <h2 className="text-4xl md:text-5xl font-heading font-bold">
-            Tech <span className="text-primary text-glow">Stack</span>
+            Tech <span className="text-primary">Stack</span>
           </h2>
         </motion.div>
 
@@ -47,14 +47,13 @@ const TechStackSection = () => {
                   : "border-border bg-card/30"
               }`}
             >
-              {/* Connection lines when hovered */}
               {hoveredIdx === i && (
                 <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg">
                   {[...Array(4)].map((_, j) => (
                     <motion.div
                       key={j}
                       initial={{ scaleX: 0, opacity: 0 }}
-                      animate={{ scaleX: 1, opacity: [0, 0.6, 0] }}
+                      animate={{ scaleX: 1, opacity: [0, 0.4, 0] }}
                       transition={{ duration: 1.2, delay: j * 0.15, repeat: Infinity }}
                       className="absolute h-px bg-primary"
                       style={{
