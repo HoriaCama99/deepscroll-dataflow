@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -16,7 +16,7 @@ interface DatacubeLayerProps {
 const DatacubeLayer = ({ index, total, scrollProgress, hoveredLayer, onHover, color }: DatacubeLayerProps) => {
   const meshRef = useRef<THREE.Mesh>(null);
 
-  const assembleProgress = Math.min(1, Math.max(0, (scrollProgress - 0.1) * 3));
+  const assembleProgress = Math.min(1, Math.max(0, scrollProgress * 3));
   const baseSpacing = 0.35;
 
   const isHovered = hoveredLayer === index;
@@ -54,7 +54,7 @@ const DatacubeLayer = ({ index, total, scrollProgress, hoveredLayer, onHover, co
         transparent
         opacity={0}
         emissive={color}
-        emissiveIntensity={isHovered ? 0.4 : 0.1}
+        emissiveIntensity={isHovered ? 0.2 : 0.05}
       />
     </mesh>
   );
@@ -67,20 +67,20 @@ interface DatacubeSceneProps {
 }
 
 const LAYERS = [
-  { color: "#0ea5e9", label: "NDVI" },
-  { color: "#10b981", label: "LST" },
-  { color: "#f59e0b", label: "SAR" },
-  { color: "#8b5cf6", label: "Elevation" },
-  { color: "#ec4899", label: "Cloud Mask" },
-  { color: "#06b6d4", label: "Reflectance" },
+  { color: "#6b9080", label: "NDVI" },
+  { color: "#7ca5b8", label: "LST" },
+  { color: "#c08b5c", label: "SAR" },
+  { color: "#8b7eb8", label: "Elevation" },
+  { color: "#b87e8b", label: "Cloud Mask" },
+  { color: "#5c9e9e", label: "Reflectance" },
 ];
 
 const Scene = ({ scrollProgress, hoveredLayer, onHoverLayer }: DatacubeSceneProps) => {
   return (
     <>
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} />
-      <pointLight position={[-3, 3, -3]} intensity={0.3} color="#0ea5e9" />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 5, 5]} intensity={0.6} />
+      <pointLight position={[-3, 3, -3]} intensity={0.2} color="#6b9080" />
 
       <group rotation={[0.5, -0.7, 0]}>
         {LAYERS.map((layer, i) => (

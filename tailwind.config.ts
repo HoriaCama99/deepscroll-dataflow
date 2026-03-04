@@ -61,9 +61,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        cyan: {
-          glow: "hsl(var(--cyan-glow))",
-        },
+        sage: "hsl(var(--sage))",
+        terracotta: "hsl(var(--terracotta))",
+        "dusty-blue": "hsl(var(--dusty-blue))",
         data: {
           green: "hsl(var(--data-green))",
           amber: "hsl(var(--data-amber))",

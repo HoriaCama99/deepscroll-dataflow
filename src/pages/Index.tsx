@@ -20,14 +20,14 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background scanline">
-      <div className="bg-grid fixed inset-0 pointer-events-none" style={{ zIndex: 0 }} />
+    <div className="min-h-screen bg-background">
+      <div className="bg-radial-soft fixed inset-0 pointer-events-none" style={{ zIndex: 0 }} />
       <div className="relative" style={{ zIndex: 1 }}>
         <HeroSection scrollProgress={scrollProgress} />
-        <DatacubeSection scrollProgress={scrollProgress} />
+        <DatacubeSection />
         <TechStackSection />
         <ClientSection />
-        <FooterSection />
+        <FooterSection scrollProgress={scrollProgress} />
       </div>
     </div>
   );

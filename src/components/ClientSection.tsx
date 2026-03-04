@@ -37,7 +37,7 @@ const ClientSection = () => {
             Trusted By
           </p>
           <h2 className="text-4xl md:text-5xl font-heading font-bold">
-            Clients & <span className="text-primary text-glow">Programmes</span>
+            Clients & <span className="text-primary">Programmes</span>
           </h2>
         </motion.div>
 
