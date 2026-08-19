@@ -6,7 +6,6 @@ import ClientSection from "@/components/ClientSection";
 import ContactSection from "@/components/ContactSection";
 import FooterSection from "@/components/FooterSection";
 import SectionNav from "@/components/SectionNav";
-import VariantSwitcher from "@/components/VariantSwitcher";
 import { useScrollProgress } from "@/hooks/useScrollProgress";
 
 const TELEMETRY = [
@@ -21,7 +20,6 @@ const Console = () => {
   return (
     <div className="min-h-screen bg-background font-mono">
       <SectionNav />
-      <VariantSwitcher />
 
       <div className="relative" style={{ zIndex: 1 }}>
         {/* ── HERO ──────────────────────────────────────────────────────── */}

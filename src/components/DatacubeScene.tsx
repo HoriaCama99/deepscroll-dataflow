@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useMotionValue, useSpring, useMotionValueEvent } from "framer-motion";
+import { asset } from "@/lib/utils";
 
 export const LAYERS = [
-  { color: "#6b9080", accent: "#4a7060", label: "NDVI",         sub: "Vegetation Index",  image: "/datacube/reflectance.gif" },
-  { color: "#8a8a86", accent: "#5f5f5c", label: "SAR",           sub: "Radar Backscatter", image: "/datacube/sar.gif" },
-  { color: "#b06a4a", accent: "#8a4e34", label: "False-Colour",  sub: "NIR · Red · Green", image: "/datacube/falsecolor_composite.png" },
-  { color: "#c68353", accent: "#9c6640", label: "LST",           sub: "Thermal Heatmap",   image: "/datacube/lst.gif" },
+  { color: "#6b9080", accent: "#4a7060", label: "NDVI",         sub: "Vegetation Index",  image: asset("datacube/reflectance.gif") },
+  { color: "#8a8a86", accent: "#5f5f5c", label: "SAR",           sub: "Radar Backscatter", image: asset("datacube/sar.gif") },
+  { color: "#b06a4a", accent: "#8a4e34", label: "False-Colour",  sub: "NIR · Red · Green", image: asset("datacube/falsecolor_composite.png") },
+  { color: "#c68353", accent: "#9c6640", label: "LST",           sub: "Thermal Heatmap",   image: asset("datacube/lst.gif") },
 ];
 
 const N        = LAYERS.length;

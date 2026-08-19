@@ -1,5 +1,6 @@
 import { useState, useRef, Fragment } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { asset } from "@/lib/utils";
 
 /** Splits on **bold** markers and renders the emphasized spans as <strong>. */
 const renderBold = (text: string) =>
@@ -18,7 +19,7 @@ const CLIENTS = [
   {
     name: "European Space Agency",
     abbr: "ESA",
-    logo: "/logos/ESA_logo.png",
+    logo: asset("logos/ESA_logo.png"),
     desc:
       "Re-engineered legacy EO archives into **cloud-optimised Zarr** via parallelized **Dask & Xarray** pipelines — cutting compute time **20%** and storage costs **50%** for the **Digital Twin Earth** initiative. Automated ingestion via **AWS Glue** and applied **TensorFlow/PyTorch** to Sentinel-2/3 anomaly detection.",
     tags: ["Dask", "Xarray", "Zarr", "AWS Glue", "Sentinel-2/3"],
@@ -26,7 +27,7 @@ const CLIENTS = [
   {
     name: "Joint Research Centre",
     abbr: "JRC",
-    logo: "/logos/JRC_logo_mask.png",
+    logo: asset("logos/JRC_logo_mask.png"),
     desc:
       "Engineered **predictive ML models** for EU environmental impact assessments using **GeoPandas & TensorFlow**, and automated **geostatistical forecasting** via **Apache Airflow**. Built **Plotly/Streamlit** dashboards widening stakeholder access to sustainability insights.",
     tags: ["PySpark", "GeoPandas", "TensorFlow", "Airflow", "Streamlit"],
@@ -34,7 +35,7 @@ const CLIENTS = [
   {
     name: "EUMETSAT",
     abbr: "EUMETSAT",
-    logo: "/logos/EUMETSAT_logo.svg",
+    logo: asset("logos/EUMETSAT_logo.svg"),
     desc:
       "Provisioned and maintained **virtual machines** powering climate-data applications for the **Destination Earth (DestinE) Digital Twin**, safeguarding **Earth Observation data integrity** across the **Copernicus** service suite.",
     tags: ["DestinE", "Digital Twin", "Copernicus", "Cloud VMs"],

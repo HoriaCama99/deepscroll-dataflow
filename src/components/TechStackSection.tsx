@@ -2,14 +2,15 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import PixelCard from "./PixelCard";
 import { PythonIcon, GdalIcon } from "./TechIcons";
+import { asset } from "@/lib/utils";
 
 const TECH = [
-  { name: "Apache Spark", desc: "Distributed processing engine for large-scale data", logo: "/tech-logos/spark.png" },
-  { name: "Dask", desc: "Parallel computing with task scheduling", logo: "/tech-logos/dask.png" },
+  { name: "Apache Spark", desc: "Distributed processing engine for large-scale data", logo: asset("tech-logos/spark.png") },
+  { name: "Dask", desc: "Parallel computing with task scheduling", logo: asset("tech-logos/dask.png") },
   { name: "Python", desc: "Core language for scientific computing", Icon: PythonIcon, color: "text-sage" },
-  { name: "Xarray", desc: "N-dimensional labeled arrays and datasets", logo: "/tech-logos/xarray.png" },
+  { name: "Xarray", desc: "N-dimensional labeled arrays and datasets", logo: asset("tech-logos/xarray.png") },
   { name: "GDAL/OGR", desc: "Geospatial data abstraction library", Icon: GdalIcon, color: "text-data-green" },
-  { name: "PostgreSQL", desc: "Spatial database with PostGIS extension", logo: "/tech-logos/postgresql.png" },
+  { name: "PostgreSQL", desc: "Spatial database with PostGIS extension", logo: asset("tech-logos/postgresql.png") },
 ];
 
 const TechStackSection = () => {
