@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting…</title>
+    <script>
+      // Single-Page App redirect for GitHub Pages project sites.
+      // Encodes the requested path into a query string on /portfolio/,
+      // where the inline script in index.html restores it via history.replaceState.
+      var basePath = "/portfolio/";
+      var path = location.pathname.slice(basePath.length);
+      location.replace(
+        basePath + "?redirect=" + encodeURIComponent(path) + location.search.replace(/^\?/, "&") + location.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
