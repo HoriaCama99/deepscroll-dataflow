@@ -1,18 +1,19 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import PixelCard from "./PixelCard";
+import { PythonIcon, GdalIcon } from "./TechIcons";
 
 const TECH = [
-  { name: "Apache Spark", abbr: "SPK", desc: "Distributed processing engine for large-scale data" },
-  { name: "Dask", abbr: "DSK", desc: "Parallel computing with task scheduling" },
-  { name: "Python", abbr: "PY", desc: "Core language for scientific computing" },
-  { name: "Xarray", abbr: "XR", desc: "N-dimensional labeled arrays and datasets" },
-  { name: "GDAL/OGR", abbr: "GDL", desc: "Geospatial data abstraction library" },
-  { name: "PostgreSQL", abbr: "PG", desc: "Spatial database with PostGIS extension" },
+  { name: "Apache Spark", desc: "Distributed processing engine for large-scale data", logo: "/tech-logos/spark.png" },
+  { name: "Dask", desc: "Parallel computing with task scheduling", logo: "/tech-logos/dask.png" },
+  { name: "Python", desc: "Core language for scientific computing", Icon: PythonIcon, color: "text-sage" },
+  { name: "Xarray", desc: "N-dimensional labeled arrays and datasets", logo: "/tech-logos/xarray.png" },
+  { name: "GDAL/OGR", desc: "Geospatial data abstraction library", Icon: GdalIcon, color: "text-data-green" },
+  { name: "PostgreSQL", desc: "Spatial database with PostGIS extension", logo: "/tech-logos/postgresql.png" },
 ];
 
 const TechStackSection = () => {
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const sectionRef = useRef(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { margin: "-100px" });
 
   return (
@@ -21,7 +22,7 @@ const TechStackSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ type: "spring", bounce: 0, duration: 0.6 }}
           className="mb-16"
         >
           <p className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2 font-mono">
@@ -38,45 +39,25 @@ const TechStackSection = () => {
               key={tech.name}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              onMouseEnter={() => setHoveredIdx(i)}
-              onMouseLeave={() => setHoveredIdx(null)}
-              className={`relative p-6 rounded-lg border transition-all duration-500 cursor-default ${
-                hoveredIdx === i
-                  ? "border-primary bg-primary/5 border-glow"
-                  : "border-border bg-card/30"
-              }`}
+              transition={{ type: "spring", bounce: 0, duration: 0.4, delay: i * 0.1 }}
             >
-              {hoveredIdx === i && (
-                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg">
-                  {[...Array(4)].map((_, j) => (
-                    <motion.div
-                      key={j}
-                      initial={{ scaleX: 0, opacity: 0 }}
-                      animate={{ scaleX: 1, opacity: [0, 0.4, 0] }}
-                      transition={{ duration: 1.2, delay: j * 0.15, repeat: Infinity }}
-                      className="absolute h-px bg-primary"
-                      style={{
-                        top: `${20 + j * 20}%`,
-                        left: j % 2 === 0 ? 0 : "auto",
-                        right: j % 2 === 1 ? 0 : "auto",
-                        width: "100%",
-                        transformOrigin: j % 2 === 0 ? "left" : "right",
-                      }}
-                    />
-                  ))}
+              <PixelCard variant="pink" className="rounded-lg border border-border bg-card/30 min-h-[140px] cursor-default">
+                <div className="absolute inset-0 p-6 flex flex-col">
+                  <div className="h-8 mb-3 flex items-center">
+                    {tech.logo ? (
+                      <img src={tech.logo} alt="" className="h-full w-auto object-contain" />
+                    ) : (
+                      <tech.Icon className={`w-7 h-7 ${tech.color}`} />
+                    )}
+                  </div>
+                  <h3 className="font-heading font-semibold text-foreground text-lg mb-2">
+                    {tech.name}
+                  </h3>
+                  <p className="text-xs text-muted-foreground font-mono leading-relaxed">
+                    {tech.desc}
+                  </p>
                 </div>
-              )}
-
-              <div className="font-mono text-xs text-muted-foreground mb-3">
-                [{tech.abbr}]
-              </div>
-              <h3 className="font-heading font-semibold text-foreground text-lg mb-2">
-                {tech.name}
-              </h3>
-              <p className="text-xs text-muted-foreground font-mono leading-relaxed">
-                {tech.desc}
-              </p>
+              </PixelCard>
             </motion.div>
           ))}
         </div>

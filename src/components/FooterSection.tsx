@@ -21,13 +21,15 @@ const FooterSection = ({ scrollProgress }: FooterSectionProps) => {
     resize();
     window.addEventListener("resize", resize);
 
-    const onMove = (e: MouseEvent) => {
+    const onMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
     };
-    canvas.addEventListener("mousemove", onMove);
+    canvas.addEventListener("pointermove", onMove);
     const onLeave = () => { mouseRef.current = { x: -1000, y: -1000 }; };
-    canvas.addEventListener("mouseleave", onLeave);
+    canvas.addEventListener("pointerleave", onLeave);
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let raf: number;
     const draw = () => {
@@ -69,14 +71,16 @@ const FooterSection = ({ scrollProgress }: FooterSectionProps) => {
         ctx.lineWidth = 1.2;
         ctx.stroke();
       }
-      raf = requestAnimationFrame(draw);
+      if (!prefersReducedMotion) {
+        raf = requestAnimationFrame(draw);
+      }
     };
     draw();
 
     return () => {
       window.removeEventListener("resize", resize);
-      canvas.removeEventListener("mousemove", onMove);
-      canvas.removeEventListener("mouseleave", onLeave);
+      canvas.removeEventListener("pointermove", onMove);
+      canvas.removeEventListener("pointerleave", onLeave);
       cancelAnimationFrame(raf);
     };
   }, [scrollProgress]);

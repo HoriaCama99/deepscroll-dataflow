@@ -1,55 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-
 @layer base {
   :root {
-    --background: 48 33% 96%;
+    --cream: #FDFCF0;
+    --sage: 150 20% 45%;
+    --terracotta: 15 40% 55%;
+    --cream-hsl: 48 33% 98%;
+
+    --background: 48 33% 98%;
     --foreground: 0 0% 17%;
 
-    --card: 48 30% 93%;
+    --card: 48 30% 95%;
     --card-foreground: 0 0% 17%;
 
-    --popover: 48 30% 93%;
+    --popover: 48 30% 95%;
     --popover-foreground: 0 0% 17%;
 
     --primary: 150 20% 45%;
-    --primary-foreground: 48 33% 96%;
+    --primary-foreground: 48 33% 98%;
 
-    --secondary: 48 18% 88%;
+    --secondary: 48 18% 90%;
     --secondary-foreground: 0 0% 25%;
 
-    --muted: 48 15% 90%;
+    --muted: 48 15% 92%;
     --muted-foreground: 0 0% 45%;
 
     --accent: 150 20% 45%;
-    --accent-foreground: 48 33% 96%;
+    --accent-foreground: 48 33% 98%;
 
     --destructive: 0 60% 50%;
-    --destructive-foreground: 48 33% 96%;
+    --destructive-foreground: 48 33% 98%;
 
-    --border: 40 15% 82%;
-    --input: 40 15% 82%;
+    --border: 40 15% 85%;
+    --input: 40 15% 85%;
     --ring: 150 20% 45%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 48 30% 94%;
+    --sidebar-background: 48 30% 95%;
     --sidebar-foreground: 0 0% 30%;
     --sidebar-primary: 150 20% 45%;
-    --sidebar-primary-foreground: 48 33% 96%;
-    --sidebar-accent: 48 18% 88%;
+    --sidebar-primary-foreground: 48 33% 98%;
+    --sidebar-accent: 48 18% 90%;
     --sidebar-accent-foreground: 0 0% 30%;
-    --sidebar-border: 40 15% 82%;
+    --sidebar-border: 40 15% 85%;
     --sidebar-ring: 150 20% 45%;
 
-    /* Custom tokens */
-    --sage: 150 20% 45%;
-    --terracotta: 15 40% 55%;
     --dusty-blue: 210 25% 60%;
-    --cream-dark: 48 20% 88%;
+    --cream-dark: 48 20% 90%;
     --data-green: 150 30% 50%;
     --data-amber: 35 50% 55%;
 
@@ -90,9 +92,123 @@
   }
 
   .bg-radial-soft {
-    background: 
-      radial-gradient(ellipse at 20% 50%, hsl(var(--sage) / 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, hsl(var(--dusty-blue) / 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 60% 80%, hsl(var(--terracotta) / 0.06) 0%, transparent 50%);
+    background:
+      linear-gradient(180deg, hsl(var(--sage) / 0.12) 0%, var(--cream) 100%);
+  }
+
+  .ascii-topography {
+    font-family: 'Courier New', monospace;
+    will-change: transform;
+  }
+
+  /* ── Satellite Console variant ─────────────────────────────────── */
+  .hud-scanlines {
+    background: repeating-linear-gradient(to bottom, rgba(43,43,43,.05) 0px, rgba(43,43,43,.05) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode: multiply;
+  }
+  .hud-grid {
+    background-image:
+      linear-gradient(hsla(40,15%,50%,.10) 1px, transparent 1px),
+      linear-gradient(90deg, hsla(40,15%,50%,.10) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .hud-corner { position: absolute; width: 22px; height: 22px; opacity: .55; }
+  .hud-corner.tl { top: 0; left: 0; border-top: 2px solid hsl(var(--sage)); border-left: 2px solid hsl(var(--sage)); }
+  .hud-corner.tr { top: 0; right: 0; border-top: 2px solid hsl(var(--sage)); border-right: 2px solid hsl(var(--sage)); }
+  .hud-corner.bl { bottom: 0; left: 0; border-bottom: 2px solid hsl(var(--sage)); border-left: 2px solid hsl(var(--sage)); }
+  .hud-corner.br { bottom: 0; right: 0; border-bottom: 2px solid hsl(var(--sage)); border-right: 2px solid hsl(var(--sage)); }
+
+  @keyframes hud-blink { 50% { opacity: 0; } }
+  .animate-hud-blink { animation: hud-blink 1.1s steps(1) infinite; }
+
+  @keyframes hud-sweep { to { transform: rotate(360deg); } }
+  .animate-hud-sweep { animation: hud-sweep 6s linear infinite; }
+
+  @keyframes hud-orbit { to { transform: rotate(360deg); } }
+  .animate-hud-orbit { animation: hud-orbit 14s linear infinite; }
+
+  @keyframes hud-drop { 0% { top: -6px; opacity: 0; } 20% { opacity: 1; } 100% { top: 46px; opacity: 0; } }
+  .animate-hud-drop { animation: hud-drop 2s ease-in-out infinite; }
+
+  /* ── Zarr Cube variant ─────────────────────────────────────────── */
+  @keyframes cube-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .animate-cube-float { animation: cube-float 7s ease-in-out infinite; }
+
+  @keyframes cube-glow { 0%, 100% { opacity: .55; } 50% { opacity: .95; } }
+  .animate-cube-glow { animation: cube-glow 5s ease-in-out infinite; }
+}
+
+/* ── Typography: optical sizing & tracking (Apple §15) ────────────── */
+
+h1, h2, h3 {
+  font-optical-sizing: auto;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+/* ── Press feedback: respond on pointer-down (Apple §1) ───────────── */
+
+button,
+[role="button"],
+a,
+.cursor-pointer {
+  transition: transform 100ms ease-out;
+}
+
+button:active,
+[role="button"]:active,
+.cursor-pointer:active {
+  transform: scale(0.97);
+}
+
+/* ── Reduced motion (Apple §14) ───────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15s !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reduced-motion-hide {
+    display: none;
+  }
+}
+
+/* ── Reduced transparency (Apple §14) ─────────────────────────────── */
+
+@media (prefers-reduced-transparency: reduce) {
+  [style*="backdrop-filter"],
+  .backdrop-blur-md,
+  .backdrop-blur-sm {
+    background-color: hsl(var(--background)) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* ── Increased contrast (Apple §14) ───────────────────────────────── */
+
+@media (prefers-contrast: more) {
+  :root {
+    --border: 0 0% 60%;
+    --muted-foreground: 0 0% 30%;
+  }
+
+  .border-glow {
+    box-shadow: 0 0 0 2px hsl(var(--primary));
   }
 }

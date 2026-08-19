@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Local backup artifacts (not part of the project)
+src-backup/
+src-modified_1/
+src.zip
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

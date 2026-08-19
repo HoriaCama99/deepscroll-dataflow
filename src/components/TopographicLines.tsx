@@ -20,6 +20,11 @@ const TopographicLines = ({ scrollProgress }: TopographicLinesProps) => {
 
     const lineCount = 20;
     const spacing = canvas.height / lineCount;
+    const hues = [
+      { h: 150, s: 20, l: 45 }, // sage
+      { h: 210, s: 25, l: 60 }, // dusty-blue
+      { h: 15, s: 40, l: 55 },  // terracotta
+    ];
 
     for (let i = 0; i < lineCount; i++) {
       ctx.beginPath();
@@ -37,8 +42,9 @@ const TopographicLines = ({ scrollProgress }: TopographicLinesProps) => {
         else ctx.lineTo(x, y);
       }
 
-      const alpha = 0.04 + Math.abs(Math.sin(scrollProgress * 2 + i * 0.3)) * 0.06;
-      ctx.strokeStyle = `hsla(199, 89%, 48%, ${alpha})`;
+      const alpha = 0.05 + Math.abs(Math.sin(scrollProgress * 2 + i * 0.3)) * 0.07;
+      const hue = hues[i % hues.length];
+      ctx.strokeStyle = `hsla(${hue.h}, ${hue.s}%, ${hue.l}%, ${alpha})`;
       ctx.lineWidth = 1;
       ctx.stroke();
     }

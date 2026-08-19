@@ -48,6 +48,7 @@ const AsciiOverlay = () => {
     };
     window.addEventListener("mousemove", onMove);
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.font = `${GRID_SIZE * 0.65}px 'JetBrains Mono', monospace`;
@@ -73,11 +74,11 @@ const AsciiOverlay = () => {
         }
 
         const alpha = dist < SCATTER_RADIUS ? 0.15 + (1 - dist / SCATTER_RADIUS) * 0.4 : 0.08;
-        ctx.fillStyle = `hsla(199, 89%, 48%, ${alpha})`;
+        ctx.fillStyle = `hsla(150, 20%, 45%, ${alpha})`;
         ctx.fillText(p.char, p.x, p.y);
       }
 
-      rafRef.current = requestAnimationFrame(animate);
+      if (!prefersReducedMotion) rafRef.current = requestAnimationFrame(animate);
     };
     animate();
 
