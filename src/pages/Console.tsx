@@ -49,53 +49,60 @@ const Console = () => {
             </span>
           </div>
 
-          <div className="relative z-[3] max-w-3xl mx-auto px-6 text-center">
-            <div className="relative py-10 px-4 md:px-16">
-              <span className="hud-corner tl" />
-              <span className="hud-corner tr" />
-              <span className="hud-corner bl" />
-              <span className="hud-corner br" />
+          {/* Flex column keeps the centered content and the scroll cue in normal
+              flow (one above the other) instead of two independently-positioned
+              absolute blocks, so they can never overlap on shorter viewports. */}
+          <div className="relative z-[3] h-full w-full flex flex-col items-center px-6 pt-11">
+            <div className="flex-1 min-h-0 w-full flex items-center justify-center">
+              <div className="max-w-3xl mx-auto text-center">
+                <div className="relative py-10 px-4 md:px-16">
+                  <span className="hud-corner tl" />
+                  <span className="hud-corner tr" />
+                  <span className="hud-corner bl" />
+                  <span className="hud-corner br" />
 
-              <p className="text-xs tracking-[0.3em] uppercase text-sage mb-4 font-mono">
-                // Earth Observation &middot; Big Data Science
-                <span className="inline-block w-[6px] h-[12px] bg-sage ml-1 align-[-2px] animate-hud-blink" />
-              </p>
-              <h1 className="text-5xl md:text-7xl font-heading font-bold leading-[1.02] tracking-tight mb-6">
-                Spatial Forecasting
-                <br />
-                <span className="text-primary inline-flex items-center gap-3">
-                  <span className="text-3xl md:text-4xl font-normal opacity-50">&lang;</span>
-                  at Scale
-                  <span className="text-3xl md:text-4xl font-normal opacity-50">&rang;</span>
-                </span>
-              </h1>
-              <p className="text-muted-foreground max-w-xl mx-auto mb-10 font-mono text-sm leading-relaxed">
-                Senior EO Data Scientist &mdash; parallel processing pipelines, multidimensional
-                datacube analytics, and geospatial intelligence for ESA / Copernicus programmes.
-              </p>
+                  <p className="text-xs tracking-[0.3em] uppercase text-sage mb-4 font-mono">
+                    // Earth Observation &middot; Big Data Science
+                    <span className="inline-block w-[6px] h-[12px] bg-sage ml-1 align-[-2px] animate-hud-blink" />
+                  </p>
+                  <h1 className="text-5xl md:text-7xl font-heading font-bold leading-[1.02] tracking-tight mb-6">
+                    Spatial Forecasting
+                    <br />
+                    <span className="text-primary inline-flex items-center gap-3">
+                      <span className="text-3xl md:text-4xl font-normal opacity-50">&lang;</span>
+                      at Scale
+                      <span className="text-3xl md:text-4xl font-normal opacity-50">&rang;</span>
+                    </span>
+                  </h1>
+                  <p className="text-muted-foreground max-w-xl mx-auto mb-10 font-mono text-sm leading-relaxed">
+                    Senior EO Data Scientist &mdash; parallel processing pipelines, multidimensional
+                    datacube analytics, and geospatial intelligence for ESA / Copernicus programmes.
+                  </p>
 
-              <div className="flex items-center justify-center gap-3 flex-wrap">
-                {TELEMETRY.map((t) => (
-                  <div key={t.label} className="relative border border-border bg-card/60 backdrop-blur-sm px-4 py-2.5 text-left min-w-[130px]">
-                    <span className="absolute -top-px -left-px w-2 h-2 border-t-2 border-l-2 border-sage/70" />
-                    <span className="absolute -bottom-px -right-px w-2 h-2 border-b-2 border-r-2 border-sage/70" />
-                    <div className="flex items-center gap-2 text-[11px] font-semibold tracking-wider mb-1">
-                      <span className={`w-1.5 h-1.5 rounded-full ${t.dot} animate-pulse`} />
-                      {t.label}
-                    </div>
-                    <div className="text-[9px] text-muted-foreground tracking-wide">{t.meta}</div>
+                  <div className="flex items-center justify-center gap-3 flex-wrap">
+                    {TELEMETRY.map((t) => (
+                      <div key={t.label} className="relative border border-border bg-card/60 backdrop-blur-sm px-4 py-2.5 text-left min-w-[130px]">
+                        <span className="absolute -top-px -left-px w-2 h-2 border-t-2 border-l-2 border-sage/70" />
+                        <span className="absolute -bottom-px -right-px w-2 h-2 border-b-2 border-r-2 border-sage/70" />
+                        <div className="flex items-center gap-2 text-[11px] font-semibold tracking-wider mb-1">
+                          <span className={`w-1.5 h-1.5 rounded-full ${t.dot} animate-pulse`} />
+                          {t.label}
+                        </div>
+                        <div className="text-[9px] text-muted-foreground tracking-wide">{t.meta}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[3] text-center reduced-motion-hide">
-            <div className="text-[10px] font-mono tracking-[0.24em] text-muted-foreground mb-2">
-              Scroll // Sector 01
-            </div>
-            <div className="relative w-px h-12 mx-auto bg-gradient-to-b from-sage to-transparent overflow-hidden">
-              <span className="absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-sage animate-hud-drop" />
+            <div className="shrink-0 pb-8 text-center reduced-motion-hide">
+              <div className="text-[10px] font-mono tracking-[0.24em] text-muted-foreground mb-2">
+                Scroll // Sector 01
+              </div>
+              <div className="relative w-px h-12 mx-auto bg-gradient-to-b from-sage to-transparent overflow-hidden">
+                <span className="absolute left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-sage animate-hud-drop" />
+              </div>
             </div>
           </div>
         </section>

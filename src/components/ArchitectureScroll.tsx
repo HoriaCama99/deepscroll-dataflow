@@ -7,7 +7,17 @@ import Architecture from "./Architecture";
 
 const PIPELINE_STEPS = 7;
 const SCROLL_VH = 220;
-const PHASE_SPLIT = 0.55; // fraction of the pinned scroll given to the pipeline phase
+const PHASE_SPLIT = 0.55; // datacube is fully maximized and interactive from here on
+const PIPELINE_REVEAL_END = 0.42; // pipeline finishes revealing its steps here
+const MORPH_MID = (PIPELINE_REVEAL_END + PHASE_SPLIT) / 2; // pipeline fully minimized / datacube starts maximizing
+const MIN_SCALE = 0.82; // scale the shrinking/growing panel rests at mid-morph
+
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+/** Eased 0→1 ramp between two progress values — smoother than a linear crossfade. */
+const smoothstep = (edge0: number, edge1: number, x: number) => {
+  const t = clamp01((x - edge0) / (edge1 - edge0));
+  return t * t * (3 - 2 * t);
+};
 
 /**
  * Pinned, scroll-jacked version of the architecture section (Console variant only).
@@ -37,9 +47,19 @@ const ArchitectureScroll = () => {
     return <Architecture variant="console" />;
   }
 
-  const inPipelinePhase = progress < PHASE_SPLIT;
-  const pipelineLocal = Math.min(1, progress / PHASE_SPLIT);
+  const inPipelinePhase = progress < MORPH_MID;
+  const pipelineLocal = Math.min(1, progress / PIPELINE_REVEAL_END);
   const cubeLocal = Math.max(0, Math.min(1, (progress - PHASE_SPLIT) / (1 - PHASE_SPLIT)));
+
+  // Sequential handoff: the pipeline shrinks away first, then the datacube grows
+  // in to take its place — a "minimize, then maximize" motion rather than a
+  // straight crossfade, tied continuously to scroll rather than jumping.
+  const minimizeT = smoothstep(PIPELINE_REVEAL_END, MORPH_MID, progress);
+  const maximizeT = smoothstep(MORPH_MID, PHASE_SPLIT, progress);
+  const pipelineOpacity = 1 - minimizeT;
+  const pipelineScale = 1 - minimizeT * (1 - MIN_SCALE);
+  const cubeOpacity = maximizeT;
+  const cubeScale = MIN_SCALE + maximizeT * (1 - MIN_SCALE);
   // Round (not floor) to match DatacubeCanvas's own nearest-layer snapping —
   // otherwise the tab highlight and the layer actually shown drift apart.
   const activeLayer = Math.max(0, Math.min(LAYERS.length - 1, Math.round(cubeLocal * LAYERS.length)));
@@ -54,26 +74,12 @@ const ArchitectureScroll = () => {
     window.scrollTo({ top: targetY, behavior: "smooth" });
   };
 
-  // Crossfade window straddling the phase boundary
-  const FADE = 0.035;
-
   const jumpToPipelineStep = (i: number) =>
-    scrollToOverall(((i + 0.5) / PIPELINE_STEPS) * PHASE_SPLIT);
+    scrollToOverall(((i + 0.5) / PIPELINE_STEPS) * PIPELINE_REVEAL_END);
   // Land close to (not between) the target layer's own focus point so it comes
-  // up fully lifted rather than blended 50/50 with its neighbour — but never
-  // inside the crossfade window, or the pipeline ghosts through underneath.
-  const jumpToLayer = (i: number) => {
-    const raw = PHASE_SPLIT + ((i + 0.08) / LAYERS.length) * (1 - PHASE_SPLIT);
-    const clearOfFade = PHASE_SPLIT + FADE + 0.02;
-    scrollToOverall(Math.max(raw, clearOfFade));
-  };
-  const pipelineOpacity =
-    progress < PHASE_SPLIT - FADE
-      ? 1
-      : progress > PHASE_SPLIT + FADE
-      ? 0
-      : 1 - (progress - (PHASE_SPLIT - FADE)) / (FADE * 2);
-  const cubeOpacity = 1 - pipelineOpacity;
+  // up fully lifted rather than blended 50/50 with its neighbour.
+  const jumpToLayer = (i: number) =>
+    scrollToOverall(PHASE_SPLIT + ((i + 0.08) / LAYERS.length) * (1 - PHASE_SPLIT));
 
   return (
     <div ref={containerRef} style={{ height: `${SCROLL_VH}vh` }} className="relative">
@@ -108,7 +114,11 @@ const ArchitectureScroll = () => {
           <div className="relative h-[360px] sm:h-[400px] md:h-[440px]">
             <div
               className="absolute inset-0 border border-border bg-card/50 p-4 md:p-5"
-              style={{ opacity: pipelineOpacity, pointerEvents: inPipelinePhase ? "auto" : "none" }}
+              style={{
+                opacity: pipelineOpacity,
+                transform: `scale(${pipelineScale})`,
+                pointerEvents: inPipelinePhase ? "auto" : "none",
+              }}
             >
               <span className="absolute -top-px -left-px w-4 h-4 border-t-2 border-l-2 border-sage/60" />
               <span className="absolute -top-px -right-px w-4 h-4 border-t-2 border-r-2 border-sage/60" />
@@ -119,7 +129,11 @@ const ArchitectureScroll = () => {
 
             <div
               className="absolute inset-0 flex flex-col md:flex-row gap-3 md:gap-4"
-              style={{ opacity: cubeOpacity, pointerEvents: inPipelinePhase ? "none" : "auto" }}
+              style={{
+                opacity: cubeOpacity,
+                transform: `scale(${cubeScale})`,
+                pointerEvents: inPipelinePhase ? "none" : "auto",
+              }}
             >
               <div className="flex-1 border border-border bg-card/50 min-h-[180px]">
                 <DatacubeCanvas
